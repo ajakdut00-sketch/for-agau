@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Agau</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Georgia, serif;
+  overflow: hidden;
+}
+
+.screen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+button {
+  padding: 12px 20px;
+  background: white;
+  color: black;
+  border: none;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+input {
+  padding: 10px;
+  background: transparent;
+  border: 1px solid #555;
+  color: white;
+  text-align: center;
+  margin-top: 10px;
+}
+
+#video {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: none;
+  filter: blur(6px) brightness(0.4);
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.show {
+  animation: fadeIn 2s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+p {
+  white-space: pre-line;
+  line-height: 1.8;
+}
+</style>
+</head>
+
+<body>
+
+<!-- STEP 1 -->
+<div class="screen" id="step1">
+  <h1>Tap to begin</h1>
+  <button onclick="start()">Begin</button>
+</div>
+
+<!-- STEP 2 -->
+<div class="screen" id="step2" style="display:none;">
+  <h2>Enter password</h2>
+  <input id="pass" placeholder="Your name">
+  <button onclick="checkPass()">Enter</button>
+</div>
+
+<!-- VIDEO -->
+<div id="video">
+  <iframe id="yt" allow="autoplay"></iframe>
+</div>
+
+<!-- LETTER -->
+<div class="container" id="letter">
+  <h2>FROM DUT — FOR AGAU ♡</h2>
+  <p id="text"></p>
+</div>
+
+<script>
+
+const videoID = "9dF0QMcFrEI";
+
+const message = `Agau,
+
+I didn’t rush this.
+Because what I feel isn’t small.
+
+You stayed… and that changed everything.
+
+You matter to me.
+
+And I really do love you.`;
+
+let i = 0;
+
+function typeWriter() {
+  if (i < message.length) {
+    document.getElementById("text").innerHTML += message.charAt(i);
+    i++;
+    setTimeout(typeWriter, 30);
+  }
+}
+
+/* START */
+function start() {
+  document.getElementById("step1").style.display = "none";
+  document.getElementById("step2").style.display = "flex";
+}
+
+/* PASSWORD */
+function checkPass() {
+  let input = document.getElementById("pass").value.toLowerCase().trim();
+
+  if (input.includes("agau")) {
+    document.getElementById("step2").style.display = "none";
+
+    document.getElementById("video").style.display = "block";
+    document.getElementById("yt").src =
+      "https://www.youtube.com/embed/" + videoID + "?autoplay=1&mute=1&controls=0";
+
+    setTimeout(() => {
+      document.getElementById("letter").classList.add("show");
+      typeWriter();
+    }, 2500);
+
+  } else {
+    alert("Try again.");
+  }
+}
+
+</script>
+
+</body>
+</html>
